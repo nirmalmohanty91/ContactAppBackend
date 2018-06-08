@@ -7,7 +7,7 @@ public interface ContactService {
 
   public List<Contact> loadAllContacts();
 
-  public Contact getByName(String firstName);
+  // public Contact getByName(String firstName);
 
   public Contact createContact(Contact contact);
 

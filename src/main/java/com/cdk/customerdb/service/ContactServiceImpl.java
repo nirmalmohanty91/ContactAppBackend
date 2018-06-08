@@ -23,11 +23,11 @@ public class ContactServiceImpl implements ContactService {
     return list;
   }
 
-  @Override
-  public Contact getByName(String firstName) {
-    contact = contactMapper.getByName(firstName);
-    return contact;
-  }
+  // @Override
+  // public Contact getByName(String firstName) {
+  // contact = contactMapper.getByName(firstName);
+  // return contact;
+  // }
 
   @Override
   public Contact createContact(Contact contact) {
@@ -42,9 +42,9 @@ public class ContactServiceImpl implements ContactService {
     boolean isdeleted = contactMapper.deleteRecordByID(id);
 
     if (isdeleted)
-      return "Customer " + id + " details has been deleted from db";
+      return "Customer with id: " + id + " has been deleted from db";
     else
-      return "Record not found in the DB with ID: " + id;
+      return "Record not found in the DB for ID: " + id;
   }
 
 }
