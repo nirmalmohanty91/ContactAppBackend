@@ -10,11 +10,9 @@ import com.cdk.customerdb.model.Contact;
 @Service
 public class ContactServiceImpl implements ContactService {
 
-  @Autowired
-  ContactMapper contactMapper;
+  @Autowired ContactMapper contactMapper;
 
-  @Autowired
-  Contact contact;
+  @Autowired Contact contact;
 
   @Override
   public List<Contact> loadAllContacts() {
@@ -41,10 +39,7 @@ public class ContactServiceImpl implements ContactService {
 
     boolean isdeleted = contactMapper.deleteRecordByID(id);
 
-    if (isdeleted)
-      return "Customer with id: " + id + " has been deleted from db";
-    else
-      return "Record not found in the DB for ID: " + id;
+    if (isdeleted) return "Customer with id: " + id + " has been deleted from db";
+    else return "Record not found in the DB for ID: " + id;
   }
-
 }
