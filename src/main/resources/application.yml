@@ -1,15 +1,15 @@
 spring:
   profiles:
     active:
-    - dev
+    - local
 ---
 
 spring:
-  profiles: dev
+  profiles: local
   datasource:
-    url: jdbc:postgresql://localhost:5433/sample_db
+    url: jdbc:postgresql://localhost:5432/customer
     driver-class-name: org.postgresql.Driver
-    username:
-    password:
+    username: postgres
+    password: postgres
   server:
-    port: 5433
+    port: 5432

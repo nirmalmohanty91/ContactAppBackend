@@ -1,11 +1,13 @@
-package com.cdk.customerdb.service;
+package com.cdk.customerdb.domain.service;
+
+import com.cdk.customerdb.domain.entity.CustomerEntity;
+import com.cdk.customerdb.model.Contact;
 
 import java.util.List;
-import com.cdk.customerdb.model.Contact;
 
 public interface ContactService {
 
-  public List<Contact> loadAllContacts();
+   List<CustomerEntity> getCustomers();
 
   // public Contact getByName(String firstName);
 

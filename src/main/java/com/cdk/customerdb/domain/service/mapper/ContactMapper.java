@@ -1,4 +1,4 @@
-package com.cdk.customerdb.mapper;
+package com.cdk.customerdb.domain.service.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;

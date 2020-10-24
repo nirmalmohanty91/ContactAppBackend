@@ -1,24 +1,30 @@
-package com.cdk.customerdb.service;
+package com.cdk.customerdb.domain.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.cdk.customerdb.domain.entity.CustomerEntity;
+import com.cdk.customerdb.domain.repository.CustomerRepository;
+import com.cdk.customerdb.domain.service.ContactService;
+import com.cdk.customerdb.domain.service.mapper.ContactMapper;
+import com.cdk.customerdb.model.Contact;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.cdk.customerdb.mapper.ContactMapper;
-import com.cdk.customerdb.model.Contact;
 
+import java.util.List;
+
+@Slf4j
 @Service
 public class ContactServiceImpl implements ContactService {
 
-  @Autowired ContactMapper contactMapper;
+  @Autowired
+  private ContactMapper contactMapper;
 
-  @Autowired Contact contact;
+  @Autowired
+  private CustomerRepository customerRepository;
 
   @Override
-  public List<Contact> loadAllContacts() {
-    List<Contact> list = new ArrayList<>();
-    list = contactMapper.getAll();
-    return list;
+  public List<CustomerEntity> getCustomers() {
+    List<CustomerEntity> customers = customerRepository.findAll();
+    return customers;
   }
 
   // @Override
