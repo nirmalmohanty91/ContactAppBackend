@@ -1,10 +1,11 @@
 package com.cdk.customerdb.domain.service.impl;
 
-import com.cdk.customerdb.domain.entity.CustomerEntity;
+import com.cdk.customerdb.domain.entity.CustomerEntityTest;
 import com.cdk.customerdb.domain.repository.CustomerRepository;
 import com.cdk.customerdb.domain.service.ContactService;
-import com.cdk.customerdb.domain.service.mapper.ContactMapper;
-import com.cdk.customerdb.model.Contact;
+import com.cdk.customerdb.domain.service.mapper.CustomerMapper;
+import com.cdk.customerdb.dto.CustomerRequestDto;
+import com.cdk.customerdb.dto.CustomerResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,37 +16,41 @@ import java.util.List;
 @Service
 public class ContactServiceImpl implements ContactService {
 
-  @Autowired
-  private ContactMapper contactMapper;
+  @Autowired private CustomerRepository customerRepository;
 
-  @Autowired
-  private CustomerRepository customerRepository;
+  @Autowired private CustomerMapper customerMapper;
 
   @Override
-  public List<CustomerEntity> getCustomers() {
-    List<CustomerEntity> customers = customerRepository.findAll();
-    return customers;
+  public List<CustomerResponseDto> getCustomers() {
+//    log.info("ContactServiceImpl:: getCustomers() execution started");
+//
+//    List<CustomerEntity> customerEntity = customerRepository.findAll();
+//
+//    List<CustomerResponseDto> customers = new ArrayList<>();
+//
+//    if (!customerEntity.isEmpty()) {
+//      customers =
+//          customerEntity.stream()
+//              .map(CustomerMapper::buildCustomerResponse)
+//              .collect(Collectors.toList());
+//    }
+//    log.info("ContactServiceImpl:: getCustomers() execution finished");
+//    return customers;
+    return null;
   }
 
-  // @Override
-  // public Contact getByName(String firstName) {
-  // contact = contactMapper.getByName(firstName);
-  // return contact;
-  // }
-
   @Override
-  public Contact createContact(Contact contact) {
-    contactMapper.insertRecord(contact);
-    contact = contactMapper.getByName(contact.getFname());
-    return contact;
-  }
+  public CustomerResponseDto createCustomer(CustomerRequestDto customerRequestDto) {
 
-  @Override
-  public String deleteByID(String id) {
+    //CustomerEntity customer = customerMapper.map(customerRequestDto);
+    CustomerEntityTest customer = CustomerEntityTest.builder()
+            .firstName(customerRequestDto.getFirstName())
+            .dateOfBirth(customerRequestDto.getDateOfBirth())
+            .build();
+    customer = customerRepository.save(customer);
 
-    boolean isdeleted = contactMapper.deleteRecordByID(id);
+    //CustomerResponseDto customerResponseDto = customerMapper.buildCustomerResponse(customer);
 
-    if (isdeleted) return "Customer with id: " + id + " has been deleted from db";
-    else return "Record not found in the DB for ID: " + id;
+    return null;
   }
 }

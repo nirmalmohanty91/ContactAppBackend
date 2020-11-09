@@ -1,11 +1,6 @@
 spring:
-  profiles:
-    active:
-    - local
----
-
-spring:
-  profiles: local
+  application:
+    name: cusotmer-service
   datasource:
     url: jdbc:postgresql://localhost:5432/customer
     driver-class-name: org.postgresql.Driver
@@ -13,3 +8,11 @@ spring:
     password: postgres
   server:
     port: 5432
+
+server:
+  port: 8080
+
+customer:
+  service:
+    source:
+      code: nirmal
