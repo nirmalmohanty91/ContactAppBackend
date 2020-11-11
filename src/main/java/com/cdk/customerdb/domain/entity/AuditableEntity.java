@@ -6,10 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -18,7 +21,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-@Access(AccessType.FIELD)
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditableEntity implements Serializable {
 
@@ -26,7 +28,7 @@ public abstract class AuditableEntity implements Serializable {
     @Column(name = "created_ts",nullable = false, updatable = false)
     private LocalDateTime createdDate;
 
-    @LastModifiedBy
+    @LastModifiedDate
     @Column(name = "updated_ts",nullable = false)
     private LocalDateTime updatedDate;
 
@@ -37,6 +39,4 @@ public abstract class AuditableEntity implements Serializable {
     @Version
     @Column(name = "record_version_nb", length = 20, nullable = false)
     private Long version;
-
-
 }

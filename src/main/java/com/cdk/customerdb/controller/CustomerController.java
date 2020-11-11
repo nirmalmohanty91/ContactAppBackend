@@ -41,7 +41,6 @@ public class CustomerController {
       @RequestHeader("authorization") String authorization,
       @RequestBody @Valid CustomerRequestDto customerRequestDto) {
     log.info("CustomerController:: retrieveCustomers() execution started for trace-id [{}]",traceId);
-
     CustomerResponseDto customer = contactService.createCustomer(customerRequestDto);
     log.info("CustomerController:: retrieveCustomers() execution finished for trace-id [{}]",traceId);
     return ResponseEntity.of(Optional.ofNullable(customer));

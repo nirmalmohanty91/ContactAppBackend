@@ -29,4 +29,8 @@ public class CustomerRequestDto implements Serializable {
 
   @NotBlank(message = "email should not be empty")
   private String email;
+
+  @NotBlank(message = "gender should not be empty")
+  private String gender;
+
 }

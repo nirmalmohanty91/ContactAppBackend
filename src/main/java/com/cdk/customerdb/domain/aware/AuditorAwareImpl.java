@@ -9,7 +9,7 @@ import java.util.Optional;
 @Component
 public class AuditorAwareImpl implements AuditorAware<String> {
 
-  @Value("${customer.service.source:code}")
+  @Value("${customer.service.source.code}")
   private String auditor;
 
     @Override

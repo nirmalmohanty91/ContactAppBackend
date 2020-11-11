@@ -17,7 +17,7 @@ public class CustomerEntity extends AuditableEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "first_name")
@@ -28,6 +28,9 @@ public class CustomerEntity extends AuditableEntity {
 
     @Column(name = "date_of_birth")
     private LocalDateTime dateOfBirth;
+
+    @Column(name = "gender")
+    private String gender;
 
     @Column(name = "email")
     private String email;
