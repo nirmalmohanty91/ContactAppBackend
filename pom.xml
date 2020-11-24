@@ -9,13 +9,13 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.cdk</groupId>
-    <artifactId>demo</artifactId>
+    <groupId>com.nirmal</groupId>
+    <artifactId>customer-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>demo</name>
-    <description>Demo project for Spring Boot</description>
+    <name>customer-service</name>
+    <description>Customer service</description>
 
 
     <properties>
