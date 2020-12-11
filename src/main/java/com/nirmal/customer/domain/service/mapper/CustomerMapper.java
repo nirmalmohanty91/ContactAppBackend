@@ -14,6 +14,7 @@ public class CustomerMapper {
 
   public static CustomerResponseDto buildCustomerResponse(CustomerEntity customerEntity) {
     return CustomerResponseDto.builder()
+            .id(customerEntity.getId())
             .firstName(customerEntity.getFirstName())
             .lastName(customerEntity.getLastName())
             .build();

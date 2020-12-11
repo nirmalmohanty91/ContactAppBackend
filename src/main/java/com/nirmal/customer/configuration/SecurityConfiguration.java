@@ -1,37 +1,81 @@
 package com.nirmal.customer.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import static com.nirmal.customer.configuration.ApplicationUserRole.*;
 
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private static final String[] HTTP_WHITELIST = {"/health"};
-    private static final String[] HTTP_ACTUATOR_LIST = {"/research/yml"};
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public SecurityConfiguration(PasswordEncoder passwordEncoder){
+        this.passwordEncoder = passwordEncoder;
     }
+
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().antMatchers(HTTP_WHITELIST).permitAll();
-        httpSecurity.headers().frameOptions().disable();
-
         httpSecurity
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HTTP_ACTUATOR_LIST)
-                .hasRole("ADMIN")
+                .antMatchers("/","index","/css/*","/js/*").permitAll()
+                .antMatchers("/api/**").hasRole(ADMIN.name())
+//                .antMatchers(HttpMethod.DELETE,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermission())
+//                .antMatchers(HttpMethod.POST,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermission())
+//                .antMatchers(HttpMethod.PUT,"/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermission())
+//                .antMatchers(HttpMethod.GET,"/management/api/**").hasAnyRole(ADMIN.name(), ADMINTRAINEE.name())
+                .anyRequest()
+                .authenticated()
                 .and()
-                .httpBasic()
-                .and()
-                .csrf()
-                .disable();
+                .httpBasic();
     }
 
+    @Override
+    @Bean
+    protected UserDetailsService userDetailsService() {
+    UserDetails nirmal =
+        User.builder()
+            .username("nirmal")
+            .password(passwordEncoder.encode("password"))
+            // .roles(ADMIN.name())
+            .authorities(STUDENT.getGrantedAuthorities())
+            .build();
+
+        UserDetails linda = User.builder()
+                .username("linda")
+                .password(passwordEncoder.encode("password123"))
+                //.roles(ADMIN.name())
+                .authorities(ADMIN.getGrantedAuthorities())
+                .build();
+
+        UserDetails tom = User.builder()
+                .username("tom")
+                .password(passwordEncoder.encode("password123"))
+                //.roles(ADMINTRAINEE.name())
+                .authorities(ADMINTRAINEE.getGrantedAuthorities())
+                .build();
+
+        return new InMemoryUserDetailsManager(nirmal, linda, tom);
+    }
+
+
 }
+
+
+
+
